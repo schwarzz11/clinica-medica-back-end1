@@ -10,6 +10,7 @@ import br.edu.imepac.comum.repositories.PerfilRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,13 +27,21 @@ public class FuncionarioService {
     @Autowired
     private ModelMapper modelMapper;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+
     public FuncionarioDto adicionarFuncionario(FuncionarioRequest request) {
-        // CORREÇÃO: Usando a exceção correta
         Perfil perfil = perfilRepository.findById(request.getPerfilId())
                 .orElseThrow(() -> new ResourceNotFoundException("Perfil não encontrado"));
 
         Funcionario funcionario = modelMapper.map(request, Funcionario.class);
         funcionario.setPerfil(perfil);
+
+
+        String senhaCriptografada = passwordEncoder.encode(request.getSenha());
+        funcionario.setSenha(senhaCriptografada);
+
 
         Funcionario savedFuncionario = funcionarioRepository.save(funcionario);
         return modelMapper.map(savedFuncionario, FuncionarioDto.class);
