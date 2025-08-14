@@ -42,3 +42,12 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka/
+
+# ==================================
+# CONFIGURAÇÕES DO SPRING ACTUATOR
+# ==================================
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus

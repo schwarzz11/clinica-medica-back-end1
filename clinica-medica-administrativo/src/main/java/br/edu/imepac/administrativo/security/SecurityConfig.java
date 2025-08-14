@@ -32,6 +32,7 @@ public class SecurityConfig {
                         // =======================================================
                         .requestMatchers(HttpMethod.POST, "/perfis", "/funcionarios").permitAll()
 
+                       
                         // Qualquer outra requisição para qualquer outro endpoint deve ser autenticada.
                         .anyRequest().authenticated()
                 )

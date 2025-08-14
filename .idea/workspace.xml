@@ -5,29 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bf63e5a7-e824-4912-afcd-e78d3351688e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/api-gateway/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api-gateway/src/main/java/br/edu/imepac/apigateway/ApiGatewayApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api-gateway/src/main/resources/application.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/clinica-medica-agendamento/src/main/java/br/edu/imepac/agendamento/config/AgendamentoSecurityConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/clinica-medica-atendimento/src/main/java/br/edu/imepac/atendimento/config/AtendimentoSecurityConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eureka-server/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eureka-server/src/main/java/br/edu/imepac/eurekaserver/EurekaServerApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eureka-server/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/src/main/resources/application.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/clinica-medica-administrativo/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/clinica-medica-administrativo/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/clinica-medica-administrativo/src/main/java/br/edu/imepac/administrativo/ClinicaMedicaAdministrativoApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/clinica-medica-administrativo/src/main/java/br/edu/imepac/administrativo/ClinicaMedicaAdministrativoApp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/clinica-medica-administrativo/src/main/java/br/edu/imepac/administrativo/security/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/clinica-medica-administrativo/src/main/java/br/edu/imepac/administrativo/security/SecurityConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/clinica-medica-administrativo/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/clinica-medica-administrativo/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/clinica-medica-agendamento/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/clinica-medica-agendamento/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/clinica-medica-agendamento/src/main/java/br/edu/imepac/agendamento/utils/ClinicaMedicaAgendamentoApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/clinica-medica-agendamento/src/main/java/br/edu/imepac/agendamento/utils/ClinicaMedicaAgendamentoApp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/clinica-medica-agendamento/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/clinica-medica-agendamento/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/clinica-medica-atendimento/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/clinica-medica-atendimento/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/clinica-medica-atendimento/src/main/java/br/edu/imepac/atendimento/utils/ClinicaMedicaAtendimentoApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/clinica-medica-atendimento/src/main/java/br/edu/imepac/atendimento/utils/ClinicaMedicaAtendimentoApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/clinica-medica-atendimento/src/main/resources/application-local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/clinica-medica-atendimento/src/main/resources/application-local.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/clinica-medica-atendimento/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/clinica-medica-atendimento/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eureka-server/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/eureka-server/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -197,7 +185,7 @@
       <command value="import lombok.Data; import java.time.LocalDate;" />
     </option>
   </component>
-  <component name="RunManager" selected="Application.ApiGatewayApplication">
+  <component name="RunManager" selected="Application.ClinicaMedicaAdministrativoApp">
     <configuration name="ApiGatewayApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="br.edu.imepac.apigateway.ApiGatewayApplication" />
       <module name="api-gateway" />
@@ -278,9 +266,9 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.ClinicaMedicaAdministrativoApp" />
         <item itemvalue="Application.ApiGatewayApplication" />
         <item itemvalue="Application.ClinicaMedicaAgendamentoApp" />
-        <item itemvalue="Application.ClinicaMedicaAdministrativoApp" />
         <item itemvalue="Application.ClinicaMedicaAtendimentoApp" />
         <item itemvalue="Application.EurekaServerApplication" />
       </list>
