@@ -1,0 +1,44 @@
+# Porta em que o nosso API Gateway irá correr.
+server:
+  port: 8088
+
+# Nome que esta aplicação terá no Eureka.
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      # REGRAS DE ROTEAMENTO DO GATEWAY
+      routes:
+        # --- Rota para o Serviço Administrativo ---
+        - id: clinica-medica-administrativo
+          uri: lb://clinica-medica-administrativo
+          predicates:
+            - Path=/administrativo/**
+          filters:
+            # CORREÇÃO APLICADA AQUI: Usando $1 em vez de ${path}
+            - RewritePath=/administrativo/(.*), /$1
+
+        # --- Rota para o Serviço de Agendamento ---
+        - id: clinica-medica-agendamento
+          uri: lb://clinica-medica-agendamento
+          predicates:
+            - Path=/agendamento/**
+          filters:
+            # CORREÇÃO APLICADA AQUI: Usando $1 em vez de ${path}
+            - RewritePath=/agendamento/(.*), /$1
+
+        # --- Rota para o Serviço de Atendimento ---
+        - id: clinica-medica-atendimento
+          uri: lb://clinica-medica-atendimento
+          predicates:
+            - Path=/atendimento/**
+          filters:
+            # CORREÇÃO APLICADA AQUI: Usando $1 em vez de ${path}
+            - RewritePath=/atendimento/(.*), /$1
+
+# Endereço do nosso Servidor Eureka.
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/

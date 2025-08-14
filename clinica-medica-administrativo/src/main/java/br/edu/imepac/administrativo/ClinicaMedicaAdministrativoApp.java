@@ -4,7 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
+
+@EnableDiscoveryClient
 @SpringBootApplication(
         scanBasePackages = {
                 "br.edu.imepac",
@@ -12,6 +15,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
                 "br.edu.imepac.comum",
         }
 )
+
 @EnableJpaRepositories(basePackages = {"br.edu.imepac.comum.repositories"})
 @EntityScan(basePackages = {"br.edu.imepac.comum.models"})
 public class ClinicaMedicaAdministrativoApp {

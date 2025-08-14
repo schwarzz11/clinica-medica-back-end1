@@ -28,7 +28,7 @@ public class SecurityConfig {
                         .requestMatchers("/auth/**").permitAll()
 
                         // =======================================================
-                        // CORREÇÃO: Permite a criação do primeiro perfil e funcionário sem autenticação. // APAGAR QUANDO TIVER UM BANCO DE DADOS FIXO. ATUALMENTE EM FASE DE TESTES.
+                        // Permite a criação do primeiro perfil e funcionário sem autenticação. // APAGAR QUANDO TIVER UM BANCO DE DADOS FIXO. ATUALMENTE EM FASE DE TESTES.
                         // =======================================================
                         .requestMatchers(HttpMethod.POST, "/perfis", "/funcionarios").permitAll()
 

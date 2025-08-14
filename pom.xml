@@ -19,6 +19,8 @@
         <module>clinica-medica-administrativo</module>
         <module>clinica-medica-atendimento</module>
         <module>clinica-medica-agendamento</module>
+        <module>eureka-server</module>
+        <module>api-gateway</module>
     </modules>
 
     <properties>
@@ -39,6 +41,14 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-web</artifactId>
                 <version>${spring.boot.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>2022.0.3</version> <!-- Use uma versão compatível com o seu Spring Boot -->
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
 
             <!-- lombok -->
