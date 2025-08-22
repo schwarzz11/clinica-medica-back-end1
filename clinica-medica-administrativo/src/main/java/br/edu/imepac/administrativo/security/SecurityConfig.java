@@ -31,8 +31,9 @@ public class SecurityConfig {
                         // Permite a criação do primeiro perfil e funcionário sem autenticação. // APAGAR QUANDO TIVER UM BANCO DE DADOS FIXO. ATUALMENTE EM FASE DE TESTES.
                         // =======================================================
                         .requestMatchers(HttpMethod.POST, "/perfis", "/funcionarios").permitAll()
+                        .requestMatchers("/actuator/**").permitAll()
 
-                       
+
                         // Qualquer outra requisição para qualquer outro endpoint deve ser autenticada.
                         .anyRequest().authenticated()
                 )

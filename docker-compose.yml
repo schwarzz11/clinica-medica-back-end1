@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  # Serviço do Prometheus (já existente)
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    networks:
+      - monitoring-net
+
+  # Serviço do Grafana (já existente)
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus
+    networks:
+      - monitoring-net
+
+  # =======================================================
+  # NOVO SERVIÇO ADICIONADO AQUI
+  # =======================================================
+  jaeger:
+    image: jaegertracing/all-in-one:latest # Imagem "tudo-em-um" para desenvolvimento
+    container_name: jaeger
+    ports:
+      - "16686:16686" # UI do Jaeger
+      - "4317:4317"   # Porta para receber telemetria via gRPC (padrão OTel)
+    networks:
+      - monitoring-net
+    environment:
+      - COLLECTOR_OTLP_ENABLED=true # Habilita o recebimento no formato OpenTelemetry
+
+networks:
+  monitoring-net:
+    driver: bridge
