@@ -1,4 +1,4 @@
-package br.edu.imepac.comum.config;
+package br.edu.imepac.comum.configs;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
