@@ -1,20 +1,159 @@
 version: '3.8'
 
 services:
-  # Serviço do Prometheus (já existente)
+  config-server:
+    build: ./config-server
+    image: clinica-medica/config-server:latest
+    ports:
+      - "8888:8888"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - JAVA_OPTS=-Xms256m -Xmx512m -Dspring.cloud.config.server.native.search-locations=file:/config-repo
+    networks:
+      - core-net
+      - monitoring-net
+
+  eureka-server:
+    build: ./eureka-server
+    image: clinica-medica/eureka-server:latest
+    depends_on:
+      - config-server
+    ports:
+      - "8761:8761"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_CLOUD_CONFIG_URI=http://config-server:8888
+      - MANAGEMENT_OTLP_TRACING_ENDPOINT=http://jaeger:4317
+    networks:
+      - core-net
+      - monitoring-net
+
+  api-gateway:
+    build: ./api-gateway
+    image: clinica-medica/api-gateway:latest
+    depends_on:
+      - config-server
+      - eureka-server
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_CLOUD_CONFIG_URI=http://config-server:8888
+      - MANAGEMENT_OTLP_TRACING_ENDPOINT=http://jaeger:4317
+      - SPRING_REDIS_HOST=redis
+    networks:
+      - core-net
+      - monitoring-net
+
+  clinica-medica-administrativo:
+    build: ./clinica-medica-administrativo
+    image: clinica-medica/administrativo:latest
+    depends_on:
+      - config-server
+      - eureka-server
+      - mysql-administrativo
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_CLOUD_CONFIG_URI=http://config-server:8888
+      - MANAGEMENT_OTLP_TRACING_ENDPOINT=http://jaeger:4317
+    networks:
+      - core-net
+      - monitoring-net
+
+  clinica-medica-agendamento:
+    build: ./clinica-medica-agendamento
+    image: clinica-medica/agendamento:latest
+    depends_on:
+      - config-server
+      - eureka-server
+      - mysql-agendamento
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_CLOUD_CONFIG_URI=http://config-server:8888
+      - MANAGEMENT_OTLP_TRACING_ENDPOINT=http://jaeger:4317
+    networks:
+      - core-net
+      - monitoring-net
+
+  clinica-medica-atendimento:
+    build: ./clinica-medica-atendimento
+    image: clinica-medica/atendimento:latest
+    depends_on:
+      - config-server
+      - eureka-server
+      - mysql-atendimento
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_CLOUD_CONFIG_URI=http://config-server:8888
+      - MANAGEMENT_OTLP_TRACING_ENDPOINT=http://jaeger:4317
+    networks:
+      - core-net
+      - monitoring-net
+
+  mysql-administrativo:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: clinica_medica
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: clinica
+      MYSQL_PASSWORD: clinica
+    ports:
+      - "3306:3306"
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      - mysql-administrativo-data:/var/lib/mysql
+    networks:
+      - core-net
+
+  mysql-agendamento:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: clinica_medica
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: clinica
+      MYSQL_PASSWORD: clinica
+    ports:
+      - "3307:3306"
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      - mysql-agendamento-data:/var/lib/mysql
+    networks:
+      - core-net
+
+  mysql-atendimento:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: clinica_medica
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: clinica
+      MYSQL_PASSWORD: clinica
+    ports:
+      - "3308:3306"
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      - mysql-atendimento-data:/var/lib/mysql
+    networks:
+      - core-net
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    networks:
+      - core-net
+
   prometheus:
     image: prom/prometheus:latest
     container_name: prometheus
     ports:
       - "9090:9090"
     volumes:
-      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./containers/monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
     networks:
       - monitoring-net
 
-  # Serviço do Grafana (já existente)
   grafana:
     image: grafana/grafana:latest
     container_name: grafana
@@ -25,20 +164,25 @@ services:
     networks:
       - monitoring-net
 
-  # =======================================================
-  # NOVO SERVIÇO ADICIONADO AQUI
-  # =======================================================
   jaeger:
-    image: jaegertracing/all-in-one:latest # Imagem "tudo-em-um" para desenvolvimento
+    image: jaegertracing/all-in-one:latest
     container_name: jaeger
     ports:
-      - "16686:16686" # UI do Jaeger
-      - "4317:4317"   # Porta para receber telemetria via gRPC (padrão OTel)
+      - "16686:16686"
+      - "4317:4317"
+    environment:
+      - COLLECTOR_OTLP_ENABLED=true
     networks:
       - monitoring-net
-    environment:
-      - COLLECTOR_OTLP_ENABLED=true # Habilita o recebimento no formato OpenTelemetry
+      - core-net
+
+volumes:
+  mysql-administrativo-data:
+  mysql-agendamento-data:
+  mysql-atendimento-data:
 
 networks:
+  core-net:
+    driver: bridge
   monitoring-net:
     driver: bridge

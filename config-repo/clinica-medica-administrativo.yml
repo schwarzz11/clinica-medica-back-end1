@@ -1,0 +1,132 @@
+spring:
+  application:
+    name: clinica-medica-administrativo
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    defer-datasource-initialization: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQLDialect
+sql:
+  init:
+    schema-locations: classpath:db/schema.sql
+    data-locations: classpath:db/data.sql
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+security:
+  jwt:
+    secret-key: 4D6251655468576D5A7134743777217A25432A462D4A614E645267556B587032
+    expiration-time: 86400000
+server:
+  port: 8080
+  error:
+    include-message: always
+    include-binding-errors: always
+    include-stacktrace: never
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+management:
+  otlp:
+    tracing:
+      endpoint: http://localhost:4317
+logging:
+  level:
+    br.edu.imepac: INFO
+    org.hibernate.SQL: INFO
+    org.springframework.security: INFO
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+  datasource:
+    url: jdbc:mysql://localhost:3306/clinica_medica?useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: ""
+  sql:
+    init:
+      mode: always
+  jpa:
+    show-sql: true
+server:
+  port: 8080
+logging:
+  level:
+    br.edu.imepac: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql: TRACE
+---
+spring:
+  config:
+    activate:
+      on-profile: docker
+  datasource:
+    url: jdbc:mysql://mysql-administrativo:3306/clinica_medica?useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: root
+  sql:
+    init:
+      mode: always
+server:
+  port: 8080
+security:
+  jwt:
+    secret-key: ${JWT_SECRET:4D6251655468576D5A7134743777217A25432A462D4A614E645267556B587032}
+    expiration-time: ${JWT_EXPIRATION:86400000}
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-server:8761/eureka/
+management:
+  otlp:
+    tracing:
+      endpoint: http://jaeger:4317
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    url: jdbc:mysql://${ADMIN_DB_HOST:administrativo-db}:${ADMIN_DB_PORT:3306}/${ADMIN_DB_NAME:clinica_medica}?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
+    username: ${ADMIN_DB_USER:clinica}
+    password: ${ADMIN_DB_PASSWORD:clinica}
+  sql:
+    init:
+      mode: never
+server:
+  port: ${SERVER_PORT:8080}
+security:
+  jwt:
+    secret-key: ${JWT_SECRET}
+    expiration-time: ${JWT_EXPIRATION:86400000}
+---
+spring:
+  config:
+    activate:
+      on-profile: test
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:administrativo;MODE=MYSQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    username: sa
+    password: ""
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+  sql:
+    init:
+      mode: never
+server:
+  port: 0
+logging:
+  level:
+    org.hibernate.SQL: WARN

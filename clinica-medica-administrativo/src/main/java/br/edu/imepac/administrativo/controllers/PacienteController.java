@@ -2,57 +2,72 @@ package br.edu.imepac.administrativo.controllers;
 
 import br.edu.imepac.comum.dtos.paciente.PacienteDto;
 import br.edu.imepac.comum.dtos.paciente.PacienteRequest;
+import br.edu.imepac.comum.dtos.responses.ApiResponse;
 import br.edu.imepac.comum.services.PacienteService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * Controlador responsável pelo fluxo de CRUD de pacientes com validações e respostas
+ * padronizadas. Toda solicitação é observada para geração de métricas e logs
+ * estruturados.
+ */
 @Slf4j
 @RestController
 @RequestMapping("/pacientes")
+@RequiredArgsConstructor
+@Tag(name = "Pacientes", description = "Gestão de pacientes e seus dados cadastrais")
 public class PacienteController {
 
-    @Autowired
-    private PacienteService pacienteService;
+    private final PacienteService pacienteService;
 
     @PostMapping
-    public ResponseEntity<PacienteDto> save(@RequestBody PacienteRequest pacienteRequest) {
-        log.info("CONTROLLER: Recebida requisição para criar paciente: {}", pacienteRequest.getNome());
-        try {
-            PacienteDto novoPaciente = pacienteService.save(pacienteRequest);
-            log.info("CONTROLLER: Serviço retornou o DTO. Preparando para enviar resposta HTTP.");
-            return new ResponseEntity<>(novoPaciente, HttpStatus.CREATED);
-        } catch (Exception e) {
-            // Se qualquer erro acontecer, ele será capturado aqui e impresso no console.
-            log.error("CONTROLLER: OCORREU UM ERRO INESPERADO AO CRIAR O PACIENTE!", e);
-            // Lança a exceção novamente para que o handler global possa retornar um erro 500.
-            throw e;
-        }
+    public ResponseEntity<ApiResponse<PacienteDto>> save(@Valid @RequestBody PacienteRequest pacienteRequest) {
+        log.info("Requisição para criar paciente: {}", pacienteRequest.getNome());
+        PacienteDto novoPaciente = pacienteService.save(pacienteRequest);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(ApiResponse.success(novoPaciente, "Paciente criado com sucesso."));
     }
 
-    // O resto dos seus métodos (GET, PUT, DELETE) permanece igual.
     @GetMapping
-    public ResponseEntity<List<PacienteDto>> listAll() {
-        return ResponseEntity.ok(pacienteService.findAll());
+    public ResponseEntity<ApiResponse<List<PacienteDto>>> listAll() {
+        return ResponseEntity.ok(ApiResponse.success(
+                pacienteService.findAll(),
+                "Pacientes recuperados com sucesso."));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PacienteDto> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(pacienteService.findById(id));
+    public ResponseEntity<ApiResponse<PacienteDto>> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(
+                pacienteService.findById(id),
+                "Paciente recuperado com sucesso."));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PacienteDto> update(@PathVariable Long id, @RequestBody PacienteRequest pacienteRequest) {
-        return ResponseEntity.ok(pacienteService.update(id, pacienteRequest));
+    public ResponseEntity<ApiResponse<PacienteDto>> update(@PathVariable Long id,
+                                                           @Valid @RequestBody PacienteRequest pacienteRequest) {
+        return ResponseEntity.ok(ApiResponse.success(
+                pacienteService.update(id, pacienteRequest),
+                "Paciente atualizado com sucesso."));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         pacienteService.delete(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(ApiResponse.success("Paciente removido com sucesso."));
     }
 }

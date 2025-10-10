@@ -1,0 +1,108 @@
+spring:
+  application:
+    name: clinica-medica-agendamento
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    defer-datasource-initialization: true
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+server:
+  port: 8081
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+logging:
+  level:
+    br.edu.imepac: INFO
+    org.hibernate.SQL: INFO
+management:
+  otlp:
+    tracing:
+      endpoint: http://localhost:4317
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+  datasource:
+    url: jdbc:mysql://localhost:3306/clinica_medica?useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: ""
+  sql:
+    init:
+      mode: always
+  jpa:
+    show-sql: true
+server:
+  port: 8081
+logging:
+  level:
+    br.edu.imepac: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql: TRACE
+---
+spring:
+  config:
+    activate:
+      on-profile: docker
+  datasource:
+    url: jdbc:mysql://mysql-agendamento:3306/clinica_medica?useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: root
+  sql:
+    init:
+      mode: always
+server:
+  port: 8081
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-server:8761/eureka/
+management:
+  otlp:
+    tracing:
+      endpoint: http://jaeger:4317
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    url: jdbc:mysql://${SCHED_DB_HOST:agendamento-db}:${SCHED_DB_PORT:3306}/${SCHED_DB_NAME:clinica_medica}?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
+    username: ${SCHED_DB_USER:clinica}
+    password: ${SCHED_DB_PASSWORD:clinica}
+  sql:
+    init:
+      mode: never
+server:
+  port: ${SERVER_PORT:8081}
+---
+spring:
+  config:
+    activate:
+      on-profile: test
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:agendamento;MODE=MYSQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    username: sa
+    password: ""
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+  sql:
+    init:
+      mode: never
+server:
+  port: 0

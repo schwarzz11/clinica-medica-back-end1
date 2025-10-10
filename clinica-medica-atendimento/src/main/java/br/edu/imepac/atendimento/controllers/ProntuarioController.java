@@ -1,91 +1,73 @@
 package br.edu.imepac.atendimento.controllers;
 
-
 import br.edu.imepac.comum.dtos.prontuario.ProntuarioDto;
 import br.edu.imepac.comum.dtos.prontuario.ProntuarioRequest;
+import br.edu.imepac.comum.dtos.responses.ApiResponse;
 import br.edu.imepac.comum.services.ProntuarioService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 /**
- * Controlador REST para gerenciar operações relacionadas a prontuários.
- * Expõe endpoints para criação, leitura, atualização e exclusão de prontuários.
+ * Endpoints de prontuários clínicos com validações e integração de observabilidade
+ * compartilhada entre os microsserviços.
  */
-@RestController // Indica que esta classe é um controlador REST
-@RequestMapping("/prontuarios") // Define o caminho base para todos os endpoints neste controlador
+@Slf4j
+@RestController
+@RequestMapping("/prontuarios")
+@RequiredArgsConstructor
+@Tag(name = "Prontuários", description = "Gestão de prontuários clínicos")
 public class ProntuarioController {
 
-    @Autowired
-    private ProntuarioService prontuarioService;
+    private final ProntuarioService prontuarioService;
 
-    /**
-     * Retorna todos os prontuários.
-     * @return Uma lista de ProntuarioDto com status HTTP 200 (OK).
-     */
-    @GetMapping // Mapeia requisições GET para /prontuarios
-    public ResponseEntity<List<ProntuarioDto>> getAllProntuarios() {
-        // Chama o serviço para obter todos os prontuários
-        List<ProntuarioDto> prontuarios = prontuarioService.findAll();
-        // Retorna a lista de prontuários com status OK
-        return ResponseEntity.ok(prontuarios);
+    @GetMapping
+    public ResponseEntity<ApiResponse<List<ProntuarioDto>>> getAllProntuarios() {
+        return ResponseEntity.ok(ApiResponse.success(
+                prontuarioService.findAll(),
+                "Prontuários recuperados com sucesso."));
     }
 
-    /**
-     * Retorna um prontuário específico pelo seu ID.
-     * @param id O ID do prontuário a ser buscado.
-     * @return O ProntuarioDto correspondente com status HTTP 200 (OK).
-     */
-    @GetMapping("/{id}") // Mapeia requisições GET para /prontuarios/{id}
-    public ResponseEntity<ProntuarioDto> getProntuarioById(@PathVariable Long id) {
-        // Chama o serviço para obter um prontuário pelo ID
-        ProntuarioDto prontuario = prontuarioService.findById(id);
-        // Retorna o prontuário encontrado com status OK
-        return ResponseEntity.ok(prontuario);
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponse<ProntuarioDto>> getProntuarioById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(
+                prontuarioService.findById(id),
+                "Prontuário recuperado com sucesso."));
     }
 
-    /**
-     * Cria um novo prontuário.
-     * @param request Os dados do prontuario a serem criados.
-     * @return O ProntuarioDto do prontuário recém-criado com status HTTP 201 (Created).
-     */
-    @PostMapping // Mapeia requisições POST para /prontuarios
-    public ResponseEntity<ProntuarioDto> createProntuario(@Valid @RequestBody ProntuarioRequest request) {
-        // *** CORREÇÃO APLICADA AQUI ***
-        // O nome do método no serviço é 'save', não 'create'.
+    @PostMapping
+    public ResponseEntity<ApiResponse<ProntuarioDto>> createProntuario(@Valid @RequestBody ProntuarioRequest request) {
+        log.info("Criando prontuário para consulta {}", request.getConsultaId());
         ProntuarioDto createdProntuario = prontuarioService.save(request);
-        // Retorna o prontuário criado com status 201 (Created)
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdProntuario);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(ApiResponse.success(createdProntuario, "Prontuário criado com sucesso."));
     }
 
-    /**
-     * Atualiza um prontuário existente.
-     * @param id O ID do prontuário a ser atualizado.
-     * @param request Os novos dados do prontuário.
-     * @return O ProntuarioDto do prontuário atualizado com status HTTP 200 (OK).
-     */
-    @PutMapping("/{id}") // Mapeia requisições PUT para /prontuarios/{id}
-    public ResponseEntity<ProntuarioDto> updateProntuario(@PathVariable Long id, @Valid @RequestBody ProntuarioRequest request) {
-        // Chama o serviço para atualizar o prontuário
-        ProntuarioDto updatedProntuario = prontuarioService.update(id, request);
-        // Retorna o prontuário atualizado com status OK
-        return ResponseEntity.ok(updatedProntuario);
+    @PutMapping("/{id}")
+    public ResponseEntity<ApiResponse<ProntuarioDto>> updateProntuario(@PathVariable Long id,
+                                                                       @Valid @RequestBody ProntuarioRequest request) {
+        return ResponseEntity.ok(ApiResponse.success(
+                prontuarioService.update(id, request),
+                "Prontuário atualizado com sucesso."));
     }
 
-    /**
-     * Deleta um prontuário pelo seu ID.
-     * @param id O ID do prontuário a ser deletado.
-     * @return Uma resposta vazia com status HTTP 204 (No Content).
-     */
-    @DeleteMapping("/{id}") // Mapeia requisições DELETE para /prontuarios/{id}
-    public ResponseEntity<Void> deleteProntuario(@PathVariable Long id) {
-        // Chama o serviço para deletar o prontuário
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ApiResponse<Void>> deleteProntuario(@PathVariable Long id) {
+        log.info("Removendo prontuário {}", id);
         prontuarioService.delete(id);
-        // Retorna uma resposta vazia com status 204 (No Content)
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(ApiResponse.success("Prontuário removido com sucesso."));
     }
 }

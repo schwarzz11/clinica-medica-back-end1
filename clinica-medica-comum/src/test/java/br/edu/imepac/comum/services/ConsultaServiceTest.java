@@ -3,13 +3,18 @@ package br.edu.imepac.comum.services;
 import br.edu.imepac.comum.dtos.consulta.ConsultaRequest;
 import br.edu.imepac.comum.exceptions.ResourceNotFoundException;
 import br.edu.imepac.comum.models.Consulta;
+import br.edu.imepac.comum.observability.ConsultaMetricsPublisher;
 import br.edu.imepac.comum.repositories.ConsultaRepository;
 import br.edu.imepac.comum.repositories.FuncionarioRepository;
+import br.edu.imepac.comum.repositories.PacienteRepository;
+import io.micrometer.observation.ObservationRegistry;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.modelmapper.ModelMapper;
+import org.junit.jupiter.api.BeforeEach;
 import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -19,7 +24,18 @@ class ConsultaServiceTest {
 
     @Mock private ConsultaRepository consultaRepository;
     @Mock private FuncionarioRepository funcionarioRepository;
-    @InjectMocks private ConsultaService consultaService;
+    @Mock private PacienteRepository pacienteRepository;
+    @Mock private ConsultaMetricsPublisher metricsPublisher;
+    @Spy private ModelMapper modelMapper;
+
+    private ObservationRegistry observationRegistry;
+    private ConsultaService consultaService;
+
+    @BeforeEach
+    void setUp() {
+        observationRegistry = ObservationRegistry.create();
+        consultaService = new ConsultaService(consultaRepository, pacienteRepository, funcionarioRepository, modelMapper, observationRegistry, metricsPublisher);
+    }
 
     @Test
     void testUpdate_MedicoNotFound() {

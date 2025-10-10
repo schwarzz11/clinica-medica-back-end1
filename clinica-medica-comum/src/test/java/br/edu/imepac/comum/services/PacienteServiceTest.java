@@ -10,12 +10,14 @@ import br.edu.imepac.comum.repositories.PacienteRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
+
+import br.edu.imepac.comum.observability.PacienteMetricsPublisher;
+import io.micrometer.observation.ObservationRegistry;
 
 import java.util.Optional;
 
@@ -32,7 +34,10 @@ class PacienteServiceTest {
     private ConvenioRepository convenioRepository;
     @Spy
     private ModelMapper modelMapper;
-    @InjectMocks
+    @Mock
+    private PacienteMetricsPublisher metricsPublisher;
+
+    private ObservationRegistry observationRegistry;
     private PacienteService pacienteService;
 
     @BeforeEach
@@ -45,6 +50,9 @@ class PacienteServiceTest {
                 map().setNomeConvenio(source.getConvenio().getNomeEmpresa());
             }
         });
+
+        observationRegistry = ObservationRegistry.create();
+        pacienteService = new PacienteService(pacienteRepository, convenioRepository, modelMapper, observationRegistry, metricsPublisher);
     }
 
     @Test

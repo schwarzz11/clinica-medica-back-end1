@@ -3,6 +3,8 @@ package br.edu.imepac.administrativo.controllers;
 import br.edu.imepac.administrativo.security.AuthenticationService;
 import br.edu.imepac.comum.dtos.auth.AuthenticationRequest;
 import br.edu.imepac.comum.dtos.auth.AuthenticationResponse;
+import br.edu.imepac.comum.dtos.responses.ApiResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,9 +24,10 @@ public class AuthenticationController {
      * Recebe um utilizador e senha e, se forem válidos, retorna um token JWT.
      */
     @PostMapping("/login")
-    public ResponseEntity<AuthenticationResponse> authenticate(
-            @RequestBody AuthenticationRequest request
+    public ResponseEntity<ApiResponse<AuthenticationResponse>> authenticate(
+            @Valid @RequestBody AuthenticationRequest request
     ) {
-        return ResponseEntity.ok(authenticationService.authenticate(request));
+        AuthenticationResponse response = authenticationService.authenticate(request);
+        return ResponseEntity.ok(ApiResponse.success(response, "Autenticação realizada com sucesso."));
     }
 }

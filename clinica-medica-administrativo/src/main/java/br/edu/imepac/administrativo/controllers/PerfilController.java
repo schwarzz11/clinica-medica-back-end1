@@ -2,93 +2,62 @@ package br.edu.imepac.administrativo.controllers;
 
 import br.edu.imepac.comum.dtos.perfil.PerfilDto;
 import br.edu.imepac.comum.dtos.perfil.PerfilRequest;
-import br.edu.imepac.comum.exceptions.NotFoundClinicaMedicaException;
+import br.edu.imepac.comum.dtos.responses.ApiResponse;
 import br.edu.imepac.comum.services.PerfilService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-/**
- * Controlador REST para gerenciar operações relacionadas a perfis.
- * Expõe endpoints para criação, leitura, atualização e exclusão de perfis.
- */
-@RestController // Indica que esta classe é um controlador REST
-@RequestMapping("/perfis") // Define o caminho base para todos os endpoints neste controlador
+@RestController
+@RequestMapping("/perfis")
+@RequiredArgsConstructor
 public class PerfilController {
 
-    @Autowired // Injeta uma instância de PerfilService
-    private PerfilService perfilService;
+    private final PerfilService perfilService;
 
-    /**
-     * Retorna todos os perfis existentes.
-     * @return Uma lista de PerfilDto com status HTTP 200 (OK).
-     */
-    @GetMapping // Mapeia requisições GET para /perfis
-    public ResponseEntity<List<PerfilDto>> getAllPerfis() {
-        // Chama o serviço para obter todos os perfis
-        List<PerfilDto> perfis = perfilService.findAll();
-        // Retorna a lista de perfis com status OK
-        return ResponseEntity.ok(perfis);
+    @GetMapping
+    public ResponseEntity<ApiResponse<List<PerfilDto>>> getAllPerfis() {
+        return ResponseEntity.ok(ApiResponse.success(
+                perfilService.findAll(),
+                "Perfis recuperados com sucesso."));
     }
 
-    /**
-     * Retorna um perfil específico pelo seu ID.
-     * @param id O ID do perfil a ser buscado.
-     * @return O PerfilDto correspondente com status HTTP 200 (OK).
-     * @throws NotFoundClinicaMedicaException Se o perfil não for encontrado.
-     */
-    @GetMapping("/{id}") // Mapeia requisições GET para /perfis/{id}
-    public ResponseEntity<PerfilDto> getPerfilById(@PathVariable Long id) {
-        // Chama o serviço para obter um perfil pelo ID
-        PerfilDto perfil = perfilService.findById(id);
-        // Retorna o perfil encontrado com status OK
-        return ResponseEntity.ok(perfil);
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponse<PerfilDto>> getPerfilById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(
+                perfilService.findById(id),
+                "Perfil recuperado com sucesso."));
     }
 
-    /**
-     * Cria um novo perfil.
-     * @param request Os dados do perfil a serem criados.
-     * @return O PerfilDto do perfil recém-criado com status HTTP 201 (Created).
-     */
-    @PostMapping // Mapeia requisições POST para /perfis
-    public ResponseEntity<PerfilDto> createPerfil(@Valid @RequestBody PerfilRequest request) {
-        // *** CORREÇÃO APLICADA AQUI ***
-        // O nome do método no serviço é 'save', não 'create'.
+    @PostMapping
+    public ResponseEntity<ApiResponse<PerfilDto>> createPerfil(@Valid @RequestBody PerfilRequest request) {
         PerfilDto createdPerfil = perfilService.save(request);
-        // Retorna o perfil criado com status 201 (Created)
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdPerfil);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(ApiResponse.success(createdPerfil, "Perfil criado com sucesso."));
     }
 
-    /**
-     * Atualiza um perfil existente.
-     * @param id O ID do perfil a ser atualizado.
-     * @param request Os novos dados do perfil.
-     * @return O PerfilDto do perfil atualizado com status HTTP 200 (OK).
-     * @throws NotFoundClinicaMedicaException Se o perfil não for encontrado.
-     */
-    @PutMapping("/{id}") // Mapeia requisições PUT para /perfis/{id}
-    public ResponseEntity<PerfilDto> updatePerfil(@PathVariable Long id, @Valid @RequestBody PerfilRequest request) {
-        // Chama o serviço para atualizar o perfil
-        PerfilDto updatedPerfil = perfilService.update(id, request);
-        // Retorna o perfil atualizado com status OK
-        return ResponseEntity.ok(updatedPerfil);
+    @PutMapping("/{id}")
+    public ResponseEntity<ApiResponse<PerfilDto>> updatePerfil(@PathVariable Long id,
+                                                                @Valid @RequestBody PerfilRequest request) {
+        return ResponseEntity.ok(ApiResponse.success(
+                perfilService.update(id, request),
+                "Perfil atualizado com sucesso."));
     }
 
-    /**
-     * Deleta um perfil pelo seu ID.
-     * @param id O ID do perfil a ser deletado.
-     * @return Uma resposta vazia com status HTTP 204 (No Content).
-     * @throws NotFoundClinicaMedicaException Se o perfil não for encontrado.
-     */
-    @DeleteMapping("/{id}") // Mapeia requisições DELETE para /perfis/{id}
-    public ResponseEntity<Void> deletePerfil(@PathVariable Long id) {
-        // Chama o serviço para deletar o perfil
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ApiResponse<Void>> deletePerfil(@PathVariable Long id) {
         perfilService.delete(id);
-        // Retorna uma resposta vazia com status 204 (No Content)
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(ApiResponse.success("Perfil removido com sucesso."));
     }
 }

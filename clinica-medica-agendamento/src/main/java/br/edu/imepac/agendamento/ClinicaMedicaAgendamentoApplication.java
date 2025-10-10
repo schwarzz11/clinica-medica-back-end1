@@ -1,0 +1,24 @@
+package br.edu.imepac.agendamento;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+
+@EnableDiscoveryClient
+@SpringBootApplication(
+        scanBasePackages = {
+                "br.edu.imepac",
+                "br.edu.imepac.agendamento",
+                "br.edu.imepac.comum"
+        }
+)
+@EnableJpaRepositories(basePackages = "br.edu.imepac.comum.repositories")
+@EntityScan(basePackages = "br.edu.imepac.comum.models")
+public class ClinicaMedicaAgendamentoApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(ClinicaMedicaAgendamentoApplication.class, args);
+    }
+}

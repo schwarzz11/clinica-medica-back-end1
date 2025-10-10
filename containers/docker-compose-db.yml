@@ -1,0 +1,39 @@
+version: "3.8"
+services:
+  mysql-administrativo:
+    image: mysql:8.0
+    container_name: mysql-administrativo
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_DATABASE: clinica_medica_administrativo
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_administrativo_data:/var/lib/mysql
+
+  mysql-agendamento:
+    image: mysql:8.0
+    container_name: mysql-agendamento
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_DATABASE: clinica_medica_agendamento
+    ports:
+      - "3308:3306"
+    volumes:
+      - mysql_agendamento_data:/var/lib/mysql
+
+  mysql-atendimento:
+    image: mysql:8.0
+    container_name: mysql-atendimento
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_DATABASE: clinica_medica_atendimento
+    ports:
+      - "3309:3306"
+    volumes:
+      - mysql_atendimento_data:/var/lib/mysql
+
+volumes:
+  mysql_administrativo_data:
+  mysql_agendamento_data:
+  mysql_atendimento_data:
