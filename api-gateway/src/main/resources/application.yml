@@ -1,53 +1,51 @@
-# Porta em que o nosso API Gateway irá correr.
 server:
   port: 8088
 
-# Nome que esta aplicação terá no Eureka.
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
 spring:
   application:
     name: api-gateway
   cloud:
     gateway:
-      # REGRAS DE ROTEAMENTO DO GATEWAY
+      # Configuração global de CORS para permitir a comunicação com o front-end.
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "http://127.0.0.1:5500"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowedHeaders: "*"
+            allow-credentials: true
+
+      # Rotas explícitas, usando os nomes exatos registados no Eureka (MINÚSCULAS).
       routes:
-        # --- Rota para o Serviço Administrativo ---
-        - id: clinica-medica-administrativo
+        - id: administrativo-service
+          # A URI aponta para o nome exato do serviço no Eureka.
           uri: lb://clinica-medica-administrativo
           predicates:
             - Path=/administrativo/**
           filters:
-            # CORREÇÃO APLICADA AQUI: Usando $1 em vez de ${path}
-            - RewritePath=/administrativo/(.*), /$1
+            # Remove o prefixo '/administrativo' para que a requisição chegue correta ao microsserviço.
+            - StripPrefix=1
 
-        # --- Rota para o Serviço de Agendamento ---
-        - id: clinica-medica-agendamento
+        - id: agendamento-service
           uri: lb://clinica-medica-agendamento
           predicates:
             - Path=/agendamento/**
           filters:
-            # CORREÇÃO APLICADA AQUI: Usando $1 em vez de ${path}
-            - RewritePath=/agendamento/(.*), /$1
+            - StripPrefix=1
 
-        # --- Rota para o Serviço de Atendimento ---
-        - id: clinica-medica-atendimento
+        - id: atendimento-service
           uri: lb://clinica-medica-atendimento
           predicates:
             - Path=/atendimento/**
           filters:
-            # CORREÇÃO APLICADA AQUI: Usando $1 em vez de ${path}
-            - RewritePath=/atendimento/(.*), /$1
-
-# Endereço do nosso Servidor Eureka.
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka/
-
-# ==================================
-# CONFIGURAÇÕES DO SPRING ACTUATOR
-# ==================================
-management:
-  endpoints:
-    web:
-      exposure:
-        include: health,info,prometheus
+            - StripPrefix=1

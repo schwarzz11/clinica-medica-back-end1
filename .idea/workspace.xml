@@ -5,10 +5,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bf63e5a7-e824-4912-afcd-e78d3351688e" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/api-gateway/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/clinica-medica-administrativo/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/clinica-medica-agendamento/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/clinica-medica-atendimento/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-compose-grafana.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/eureka-server/Dockerfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/clinica-medica-administrativo/src/main/java/br/edu/imepac/administrativo/security/JwtService.java" beforeDir="false" afterPath="$PROJECT_DIR$/clinica-medica-administrativo/src/main/java/br/edu/imepac/administrativo/security/JwtService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/clinica-medica-administrativo/src/main/java/br/edu/imepac/administrativo/security/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/clinica-medica-administrativo/src/main/java/br/edu/imepac/administrativo/security/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/clinica-medica-administrativo/src/main/resources/application-local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/clinica-medica-administrativo/src/main/resources/application-local.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/clinica-medica-administrativo/src/main/resources/db/data.sql" beforeDir="false" afterPath="$PROJECT_DIR$/clinica-medica-administrativo/src/main/resources/db/data.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/clinica-medica-agendamento/src/main/java/br/edu/imepac/agendamento/config/AgendamentoSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/clinica-medica-agendamento/src/main/java/br/edu/imepac/agendamento/config/AgendamentoSecurityConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/clinica-medica-agendamento/src/main/resources/application-local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/clinica-medica-agendamento/src/main/resources/application-local.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/clinica-medica-agendamento/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/clinica-medica-agendamento/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/clinica-medica-agendamento/src/main/resources/db/data.sql" beforeDir="false" afterPath="$PROJECT_DIR$/clinica-medica-agendamento/src/main/resources/db/data.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/clinica-medica-atendimento/src/main/java/br/edu/imepac/atendimento/config/AtendimentoSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/clinica-medica-atendimento/src/main/java/br/edu/imepac/atendimento/config/AtendimentoSecurityConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/clinica-medica-atendimento/src/main/resources/application-local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/clinica-medica-atendimento/src/main/resources/application-local.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/clinica-medica-atendimento/src/main/resources/db/data.sql" beforeDir="false" afterPath="$PROJECT_DIR$/clinica-medica-atendimento/src/main/resources/db/data.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/containers/docker-compose.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,12 +54,12 @@
     &quot;assignee&quot;: &quot;schwarzz11&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/schwarzz11/clinica-medica-back-end1",
-    "accountId": "a5417c70-b254-484a-bfa6-885b332cc7e2"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/schwarzz11/clinica-medica-back-end1.git&quot;,
+    &quot;accountId&quot;: &quot;a5417c70-b254-484a-bfa6-885b332cc7e2&quot;
   }
-}]]></component>
+}</component>
   <component name="HighlightingSettingsPerFile">
     <setting file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-core/6.0.9/spring-core-6.0.9.jar!/org/springframework/util/ReflectionUtils.class" root0="SKIP_INSPECTION" />
   </component>
@@ -64,95 +81,98 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.ApiGatewayApplication.executor": "Run",
-    "Application.ClinicaMedicaAdministrativoApp.executor": "Run",
-    "Application.ClinicaMedicaAgendamentoApp.executor": "Run",
-    "Application.ClinicaMedicaAtendimentoApp.executor": "Run",
-    "Application.EurekaServerApplication.executor": "Run",
-    "Docker.clinica-medica-administrativo/Dockerfile.executor": "Run",
-    "Docker.containers.mysql: Compose Deployment.executor": "Run",
-    "Docker.containers: Compose Deployment.executor": "Run",
-    "JUnit.ConsultaServiceTest.executor": "Run",
-    "JUnit.ConsultaServiceTest.testSaveConsulta.executor": "Run",
-    "JUnit.ConsultaServiceTest.testSaveConsulta_WhenPacienteNotFound_ShouldThrowException.executor": "Run",
-    "JUnit.ConsultaServiceTest.testUpdate_MedicoNotFound.executor": "Run",
-    "JUnit.ConvenioServiceTest.executor": "Run",
-    "JUnit.ConvenioServiceTest.testDeleteConvenio.executor": "Run",
-    "JUnit.ConvenioServiceTest.testFindById_WhenFound.executor": "Run",
-    "JUnit.ConvenioServiceTest.testFindById_WhenNotFound_ShouldThrowException.executor": "Run",
-    "JUnit.ConvenioServiceTest.testSaveConvenio.executor": "Run",
-    "JUnit.EspecialidadeServiceTest.executor": "Run",
-    "JUnit.EspecialidadeServiceTest.testAdicionarEspecialidade.executor": "Run",
-    "JUnit.FuncionarioServiceTest.executor": "Run",
-    "JUnit.PacienteServiceTest.executor": "Run",
-    "JUnit.PacienteServiceTest.testSavePaciente_WithConvenio.executor": "Run",
-    "JUnit.PacienteServiceTest.testSavePaciente_WithoutConvenio.executor": "Run",
-    "JUnit.PerfilServiceTest.executor": "Run",
-    "JUnit.PerfilServiceTest.testSavePerfil.executor": "Run",
-    "JUnit.ProntuarioServiceTest.executor": "Run",
-    "JUnit.ProntuarioServiceTest.testSaveProntuario.executor": "Run",
-    "JUnit.services in clinica-medica-comum.executor": "Run",
-    "Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor": "Run",
-    "Maven.api-gateway [clean].executor": "Run",
-    "Maven.api-gateway [compile].executor": "Run",
-    "Maven.api-gateway [install].executor": "Run",
-    "Maven.api-gateway [package].executor": "Run",
-    "Maven.clinica-medica [clean,install,-U].executor": "Run",
-    "Maven.clinica-medica [clean].executor": "Run",
-    "Maven.clinica-medica [compile].executor": "Run",
-    "Maven.clinica-medica [install].executor": "Run",
-    "Maven.clinica-medica [package].executor": "Run",
-    "Maven.clinica-medica [verify].executor": "Run",
-    "Maven.clinica-medica-administrativo [clean].executor": "Run",
-    "Maven.clinica-medica-administrativo [compile].executor": "Run",
-    "Maven.clinica-medica-administrativo [install].executor": "Run",
-    "Maven.clinica-medica-administrativo [package].executor": "Run",
-    "Maven.clinica-medica-administrativo [verify].executor": "Run",
-    "Maven.clinica-medica-agendamento [clean].executor": "Run",
-    "Maven.clinica-medica-agendamento [compile].executor": "Run",
-    "Maven.clinica-medica-agendamento [install].executor": "Run",
-    "Maven.clinica-medica-agendamento [package].executor": "Run",
-    "Maven.clinica-medica-agendamento [test].executor": "Run",
-    "Maven.clinica-medica-atendimento [clean].executor": "Run",
-    "Maven.clinica-medica-atendimento [compile].executor": "Run",
-    "Maven.clinica-medica-atendimento [install].executor": "Run",
-    "Maven.clinica-medica-atendimento [package].executor": "Run",
-    "Maven.clinica-medica-comum [clean].executor": "Run",
-    "Maven.clinica-medica-comum [compile].executor": "Run",
-    "Maven.clinica-medica-comum [install].executor": "Run",
-    "Maven.clinica-medica-comum [package].executor": "Run",
-    "Maven.clinica-medica-comum [validate].executor": "Run",
-    "Maven.clinica-medica-comum [verify].executor": "Run",
-    "Maven.eureka-server [clean].executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "develop",
-    "jdk.selected.JAVA_MODULE": "17",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/lucel/OneDrive/Área de Trabalho/Faculdade/1º/clinica-medica-back-end1/otel",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.47586206",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "project.propVCSSupport.Mappings",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.ApiGatewayApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ClinicaMedicaAdministrativoApp.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ClinicaMedicaAgendamentoApp.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ClinicaMedicaAtendimentoApp.executor&quot;: &quot;Run&quot;,
+    &quot;Application.EurekaServerApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.clinica-medica-administrativo/Dockerfile.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.containers.mysql: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.containers: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose-grafana.yml: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;JAR Application.opentelemetry-javaagent.jar.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ConsultaServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ConsultaServiceTest.testSaveConsulta.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ConsultaServiceTest.testSaveConsulta_WhenPacienteNotFound_ShouldThrowException.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ConsultaServiceTest.testUpdate_MedicoNotFound.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ConvenioServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ConvenioServiceTest.testDeleteConvenio.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ConvenioServiceTest.testFindById_WhenFound.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ConvenioServiceTest.testFindById_WhenNotFound_ShouldThrowException.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ConvenioServiceTest.testSaveConvenio.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.EspecialidadeServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.EspecialidadeServiceTest.testAdicionarEspecialidade.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.FuncionarioServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PacienteServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PacienteServiceTest.testSavePaciente_WithConvenio.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PacienteServiceTest.testSavePaciente_WithoutConvenio.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PerfilServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PerfilServiceTest.testSavePerfil.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ProntuarioServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ProntuarioServiceTest.testSaveProntuario.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.services in clinica-medica-comum.executor&quot;: &quot;Run&quot;,
+    &quot;Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.api-gateway [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.api-gateway [compile].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.api-gateway [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.api-gateway [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.clinica-medica [clean,install,-U].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.clinica-medica [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.clinica-medica [compile].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.clinica-medica [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.clinica-medica [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.clinica-medica [verify].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.clinica-medica-administrativo [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.clinica-medica-administrativo [compile].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.clinica-medica-administrativo [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.clinica-medica-administrativo [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.clinica-medica-administrativo [verify].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.clinica-medica-agendamento [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.clinica-medica-agendamento [compile].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.clinica-medica-agendamento [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.clinica-medica-agendamento [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.clinica-medica-agendamento [test].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.clinica-medica-atendimento [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.clinica-medica-atendimento [compile].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.clinica-medica-atendimento [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.clinica-medica-atendimento [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.clinica-medica-comum [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.clinica-medica-comum [compile].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.clinica-medica-comum [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.clinica-medica-comum [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.clinica-medica-comum [validate].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.clinica-medica-comum [verify].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.eureka-server [clean].executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;develop&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;17&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/lucel/OneDrive/Área de Trabalho/Faculdade/1º/clinica-medica-back-end1/otel&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.47586206&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.Mappings&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="br.edu.imepac.comum.exceptions" />
@@ -165,6 +185,7 @@
       <recent name="C:\Users\ehf_v\projetos\clinica-medica\clinica-medica-administrativo\src\main\resources\db\migration" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\lucel\OneDrive\Área de Trabalho\Faculdade\4ºPeriodo - Crispim\clinica-medica-back-end1" />
       <recent name="C:\Users\ehf_v\projetos\clinica-medica\clinica-medica-administrativo\src\main\resources\database" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -178,11 +199,10 @@
       <command value="import lombok.Data; import java.time.LocalDate;" />
     </option>
   </component>
-  <component name="RunManager" selected="Application.ApiGatewayApplication">
+  <component name="RunManager" selected="Application.ClinicaMedicaAtendimentoApp">
     <configuration name="ApiGatewayApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="br.edu.imepac.apigateway.ApiGatewayApplication" />
       <module name="api-gateway" />
-      <option name="VM_PARAMETERS" value="-javaagent:&quot;C:\Users\lucel\OneDrive\Área de Trabalho\Faculdade\1º\clinica-medica-back-end1\opentelemetry-javaagent.jar&quot; -Dotel.service.name=api-gateway -Dotel.traces.exporter=otlp -Dotel.exporter.otlp.endpoint=http://localhost:4317 -Dotel.exporter.otlp.protocol=grpc -Dotel.metrics.exporter=none -Dotel.logs.exporter=none " />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="br.edu.imepac.apigateway.*" />
@@ -196,7 +216,6 @@
     <configuration name="ClinicaMedicaAdministrativoApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="br.edu.imepac.administrativo.ClinicaMedicaAdministrativoApp" />
       <module name="clinica-medica-administrativo" />
-      <option name="VM_PARAMETERS" value="-javaagent:&quot;C:\Users\lucel\OneDrive\Área de Trabalho\Faculdade\1º\clinica-medica-back-end1\opentelemetry-javaagent.jar&quot; -Dotel.service.name=clinica-medica-administrativo -Dotel.traces.exporter=otlp -Dotel.exporter.otlp.endpoint=http://localhost:4317 -Dotel.exporter.otlp.protocol=grpc -Dotel.metrics.exporter=none -Dotel.logs.exporter=none " />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="br.edu.imepac.administrativo.*" />
@@ -210,7 +229,6 @@
     <configuration name="ClinicaMedicaAgendamentoApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="br.edu.imepac.agendamento.ClinicaMedicaAgendamentoApp" />
       <module name="clinica-medica-agendamento" />
-      <option name="VM_PARAMETERS" value="-javaagent:&quot;C:\Users\lucel\OneDrive\Área de Trabalho\Faculdade\1º\clinica-medica-back-end1\opentelemetry-javaagent.jar&quot; -Dotel.service.name=clinica-medica-agendamento -Dotel.traces.exporter=otlp -Dotel.exporter.otlp.endpoint=http://localhost:4317 -Dotel.exporter.otlp.protocol=grpc -Dotel.metrics.exporter=none -Dotel.logs.exporter=none " />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="br.edu.imepac.agendamento.*" />
@@ -224,7 +242,6 @@
     <configuration name="ClinicaMedicaAtendimentoApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="br.edu.imepac.atendimento.utils.ClinicaMedicaAtendimentoApp" />
       <module name="clinica-medica-atendimento" />
-      <option name="VM_PARAMETERS" value="-javaagent:&quot;C:\Users\lucel\OneDrive\Área de Trabalho\Faculdade\1º\clinica-medica-back-end1\opentelemetry-javaagent.jar&quot; -Dotel.service.name=clinica-medica-atendimento -Dotel.traces.exporter=otlp -Dotel.exporter.otlp.endpoint=http://localhost:4317 -Dotel.exporter.otlp.protocol=grpc -Dotel.metrics.exporter=none -Dotel.logs.exporter=none " />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="br.edu.imepac.atendimento.utils.*" />
@@ -263,10 +280,10 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.ApiGatewayApplication" />
-        <item itemvalue="Application.ClinicaMedicaAgendamentoApp" />
         <item itemvalue="Application.ClinicaMedicaAtendimentoApp" />
+        <item itemvalue="Application.ClinicaMedicaAgendamentoApp" />
         <item itemvalue="Application.ClinicaMedicaAdministrativoApp" />
+        <item itemvalue="Application.ApiGatewayApplication" />
         <item itemvalue="Application.EurekaServerApplication" />
       </list>
     </recent_temporary>

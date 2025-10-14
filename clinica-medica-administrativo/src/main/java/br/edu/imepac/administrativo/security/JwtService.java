@@ -1,5 +1,6 @@
 package br.edu.imepac.administrativo.security;
 
+import br.edu.imepac.comum.models.Funcionario;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -18,58 +19,75 @@ import java.util.function.Function;
 @Service
 public class JwtService {
 
-    // Chave secreta para assinar o token. Deve ser longa e complexa.
-    // Estamos injetando o valor do application.properties.
-    @Value("${security.jwt.secret-key}")
+    @Value("${application.security.jwt.secret-key}")
     private String secretKey;
-
-    // Tempo de expiração do token em milissegundos (aqui, 24 horas).
-    @Value("${security.jwt.expiration-time}")
+    @Value("${application.security.jwt.expiration}")
     private long jwtExpiration;
+    @Value("${application.security.jwt.refresh-token.expiration}")
+    private long refreshExpiration;
 
-    // Gera um token JWT para o usuário fornecido.
-    public String generateToken(UserDetails userDetails) {
-        return generateToken(new HashMap<>(), userDetails);
-    }
-
-    public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
-        return Jwts.builder()
-                .setClaims(extraClaims)
-                .setSubject(userDetails.getUsername())
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + jwtExpiration))
-                .signWith(getSignInKey(), SignatureAlgorithm.HS256)
-                .compact();
-    }
-
-    // Valida se um token pertence ao usuário e não está expirado.
-    public boolean isTokenValid(String token, UserDetails userDetails) {
-        final String username = extractUsername(token);
-        return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
-    }
-
-    // Extrai o nome de usuário (subject) do token.
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
     }
 
-    // Verifica se o token está expirado.
-    private boolean isTokenExpired(String token) {
-        return extractExpiration(token).before(new Date());
-    }
-
-    // Extrai a data de expiração do token.
-    private Date extractExpiration(String token) {
-        return extractClaim(token, Claims::getExpiration);
-    }
-
-    // Método genérico para extrair qualquer "claim" (informação) do token.
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
     }
 
-    // Extrai todas as informações do corpo do token.
+    public String generateToken(Funcionario userDetails) {
+        return generateToken(new HashMap<>(), userDetails);
+    }
+
+    // ==========================================================================
+    // MÉTODO MODIFICADO - AQUI ESTÁ A MUDANÇA
+    // ==========================================================================
+    public String generateToken(
+            Map<String, Object> extraClaims,
+            Funcionario userDetails
+    ) {
+        // Adiciona o tipo do funcionário (perfil/role) como uma 'claim' no token.
+        // O front-end irá ler essa informação para controlar o acesso.
+        // ATENÇÃO: O nome da claim "tipoFuncionario" deve ser o mesmo esperado pelo auth.js no front-end.
+        extraClaims.put("tipoFuncionario", userDetails.getTipoFuncionario().toString());
+
+        return buildToken(extraClaims, userDetails, jwtExpiration);
+    }
+
+    public String generateRefreshToken(
+            Funcionario userDetails
+    ) {
+        return buildToken(new HashMap<>(), userDetails, refreshExpiration);
+    }
+
+    private String buildToken(
+            Map<String, Object> extraClaims,
+            UserDetails userDetails,
+            long expiration
+    ) {
+        return Jwts
+                .builder()
+                .setClaims(extraClaims)
+                .setSubject(userDetails.getUsername())
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + expiration))
+                .signWith(getSignInKey(), SignatureAlgorithm.HS256)
+                .compact();
+    }
+
+    public boolean isTokenValid(String token, UserDetails userDetails) {
+        final String username = extractUsername(token);
+        return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
+    }
+
+    private boolean isTokenExpired(String token) {
+        return extractExpiration(token).before(new Date());
+    }
+
+    private Date extractExpiration(String token) {
+        return extractClaim(token, Claims::getExpiration);
+    }
+
     private Claims extractAllClaims(String token) {
         return Jwts
                 .parserBuilder()
@@ -79,7 +97,6 @@ public class JwtService {
                 .getBody();
     }
 
-    // Obtém a chave de assinatura a partir da nossa chave secreta.
     private Key getSignInKey() {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         return Keys.hmacShaKeyFor(keyBytes);
