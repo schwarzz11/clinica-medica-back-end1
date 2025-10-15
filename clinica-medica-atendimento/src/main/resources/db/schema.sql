@@ -1,6 +1,11 @@
-DROP TABLE IF EXISTS historicos;
-CREATE TABLE IF NOT EXISTS historicos (
-    id INT AUTO_INCREMENT PRIMARY KEY, -- Alterado de SERIAL para INT AUTO_INCREMENT
-    date_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    data TEXT NOT NULL
+-- Cria a tabela de Prontuários, se ela ainda não existir.
+CREATE TABLE IF NOT EXISTS prontuarios (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    paciente_id BIGINT NOT NULL,
+    medico_id BIGINT NOT NULL,
+    data DATE NOT NULL,
+    historico TEXT,
+    receituario TEXT,
+    exames TEXT,
+    observacoes TEXT
 );

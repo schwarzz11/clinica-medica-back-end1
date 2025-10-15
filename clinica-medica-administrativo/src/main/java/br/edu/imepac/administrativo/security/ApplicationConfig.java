@@ -17,38 +17,39 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @RequiredArgsConstructor
 public class ApplicationConfig {
 
-    private final FuncionarioRepository funcionarioRepository;
+    private final FuncionarioRepository repository;
 
-    /**
-     * Define como o Spring Security deve carregar os detalhes de um usuário.
-     * Quando o Spring precisa encontrar um usuário pelo seu nome de utilizador, ele usará este método.
-     */
     @Bean
     public UserDetailsService userDetailsService() {
-        return username -> funcionarioRepository.findByUsuario(username)
-                .orElseThrow(() -> new UsernameNotFoundException("Utilizador não encontrado"));
+        return username -> {
+            // --- NOSSO ESPIÃO Nº 3 ---
+            // Vamos ver qual utilizador o Spring está a tentar encontrar.
+            System.out.println("======================================================");
+            System.out.println("A procurar na base de dados pelo utilizador: " + username);
+            System.out.println("======================================================");
+
+            var user = repository.findByUsuario(username)
+                    .orElseThrow(() -> new UsernameNotFoundException("Utilizador não encontrado na base de dados!"));
+
+            // --- NOSSO ESPIÃO Nº 4 ---
+            System.out.println("Utilizador '" + username + "' encontrado com sucesso!");
+            return user;
+        };
     }
 
-    /**
-     * Define o "provedor de autenticação".
-     * Ele junta o UserDetailsService (para encontrar o utilizador) e o PasswordEncoder (para verificar a senha).
-     */
     @Bean
-    public AuthenticationProvider authenticationProvider(PasswordEncoder passwordEncoder) {
+    public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(userDetailsService());
-        authProvider.setPasswordEncoder(passwordEncoder);
+        authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;
     }
 
-    /**
-     * Expõe o AuthenticationManager do Spring como um Bean.
-     * Este é o componente central que processa uma requisição de autenticação.
-     */
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

@@ -10,73 +10,12 @@ services:
       MYSQL_DATABASE: 'clinicamedica'
       MYSQL_ROOT_PASSWORD: 'root'
     ports:
+      # Expõe a porta 3306 do contêiner para a porta 3306 da sua máquina
       - "3306:3306"
     volumes:
+      # Garante que os dados do banco não sejam perdidos ao reiniciar o contêiner
       - mysql-data:/var/lib/mysql
 
-  # 2. Servidor de Descoberta (Eureka)
-  eureka-server:
-    build:
-      context: ./eureka-server  # Diz ao Docker para CONSTRUIR a partir da pasta ./eureka-server
-    container_name: eureka-server
-    ports:
-      - "8761:8761"
-    depends_on:
-      - mysql-db
-
-  # 3. API Gateway
-  api-gateway:
-    build:
-      context: ./api-gateway # CONSTRÓI a partir da pasta ./api-gateway
-    container_name: api-gateway
-    ports:
-      - "8088:8088"
-    environment:
-      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka
-    depends_on:
-      - eureka-server
-
-  # 4. Microsserviço Administrativo
-  administrativo-service:
-    build:
-      context: ./clinica-medica-administrativo # CONSTRÓI a partir da pasta ./clinica-medica-administrativo
-    container_name: administrativo-service
-    ports:
-      - "8081:8081"
-    environment:
-      - SPRING_PROFILES_ACTIVE=local
-      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka
-    depends_on:
-      - mysql-db
-      - eureka-server
-
-  # 5. Microsserviço de Agendamento
-  agendamento-service:
-    build:
-      context: ./clinica-medica-agendamento # CONSTRÓI a partir da pasta ./clinica-medica-agendamento
-    container_name: agendamento-service
-    ports:
-      - "8082:8082"
-    environment:
-      - SPRING_PROFILES_ACTIVE=local
-      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka
-    depends_on:
-      - mysql-db
-      - eureka-server
-
-  # 6. Microsserviço de Atendimento
-  atendimento-service:
-    build:
-      context: ./clinica-medica-atendimento # CONSTRÓI a partir da pasta ./clinica-medica-atendimento
-    container_name: atendimento-service
-    ports:
-      - "8083:8083"
-    environment:
-      - SPRING_PROFILES_ACTIVE=local
-      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka
-    depends_on:
-      - mysql-db
-      - eureka-server
-
 volumes:
+  # Define o volume para a persistência dos dados
   mysql-data:

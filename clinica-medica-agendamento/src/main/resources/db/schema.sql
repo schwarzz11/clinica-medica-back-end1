@@ -1,6 +1,9 @@
-DROP TABLE IF EXISTS historicos;
-CREATE TABLE IF NOT EXISTS historicos (
-    id INT AUTO_INCREMENT PRIMARY KEY, -- Alterado de SERIAL para INT AUTO_INCREMENT
-    date_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    data TEXT NOT NULL
+-- Cria a tabela de Consultas, se ela ainda não existir.
+CREATE TABLE IF NOT EXISTS consultas (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    paciente_id BIGINT NOT NULL,
+    medico_id BIGINT NOT NULL,
+    data_horario DATETIME NOT NULL,
+    motivo_cancelamento VARCHAR(255),
+    status VARCHAR(50)
 );

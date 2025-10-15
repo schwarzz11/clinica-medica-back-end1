@@ -16,7 +16,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
-@Component // Indica que esta classe é um componente gerido pelo Spring.
+@Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
@@ -30,42 +30,40 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
 
-        // 1. Extrai o cabeçalho "Authorization" da requisição.
-        final String authHeader = request.getHeader("Authorization");
-        final String jwt;
-        final String username;
-
-        // 2. Verifica se o cabeçalho existe e se começa com "Bearer ".
-        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            filterChain.doFilter(request, response); // Se não, continua para o próximo filtro.
+        // --- AQUI ESTÁ A CORREÇÃO CRUCIAL ---
+        // Se a requisição for para um endpoint de autenticação, não fazemos nada e passamos para o próximo filtro.
+        if (request.getServletPath().contains("/auth")) {
+            filterChain.doFilter(request, response);
             return;
         }
 
-        // 3. Extrai o token JWT do cabeçalho.
+        final String authHeader = request.getHeader("Authorization");
+        final String jwt;
+        final String userEmail; // No seu caso, é o 'usuario'
+
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         jwt = authHeader.substring(7);
-        username = jwtService.extractUsername(jwt); // Extrai o nome de utilizador do token.
+        userEmail = jwtService.extractUsername(jwt); // Extrai o nome de utilizador do token
 
-        // 4. Se o utilizador foi extraído e ainda não está autenticado no contexto de segurança...
-        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            // Carrega os detalhes do utilizador do banco de dados.
-            UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
+        if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
 
-            // 5. Se o token for válido...
             if (jwtService.isTokenValid(jwt, userDetails)) {
-                // Cria um objeto de autenticação.
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         userDetails,
-                        null, // Não precisamos das credenciais (senha) aqui.
+                        null,
                         userDetails.getAuthorities()
                 );
                 authToken.setDetails(
                         new WebAuthenticationDetailsSource().buildDetails(request)
                 );
-                // Atualiza o SecurityContextHolder com o novo objeto de autenticação.
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
         }
-        // 6. Passa a requisição para o próximo filtro na cadeia.
         filterChain.doFilter(request, response);
     }
 }
