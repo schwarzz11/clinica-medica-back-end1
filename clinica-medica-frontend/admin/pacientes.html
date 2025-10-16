@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pacientes | Clínica Vida</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div class="admin-layout">
+    <aside class="sidebar">
+      <div class="brand">
+        <img src="../img/logo.svg" alt="Clínica Vida" width="38" />
+        <span>Clínica Vida</span>
+      </div>
+      <nav>
+        <a href="dashboard.html" data-nav>Início</a>
+        <a href="pacientes.html" data-nav>Pacientes</a>
+        <a href="consultas.html" data-nav>Consultas</a>
+        <a href="prontuarios.html" data-nav>Prontuários</a>
+        <a href="funcionarios.html" data-nav>Funcionários</a>
+        <a href="convenios.html" data-nav>Convênios</a>
+        <a href="especialidades.html" data-nav>Especialidades</a>
+        <a href="perfis.html" data-nav>Perfis de Acesso</a>
+      </nav>
+      <button class="btn btn-outline btn-logout">Sair</button>
+    </aside>
+    <main class="admin-main">
+      <header class="admin-header">
+        <div>
+          <div class="breadcrumb">Administrativo &rsaquo; Pacientes</div>
+          <h1>Pacientes</h1>
+          <p class="text-muted">Cadastre, atualize e acompanhe os pacientes da clínica.</p>
+        </div>
+        <div id="user-badge"></div>
+      </header>
+
+      <div class="flex-between mb-2">
+        <div class="text-muted" id="pacientes-total">-- pacientes cadastrados</div>
+        <div data-permission="cadastrarPaciente">
+          <button id="btn-novo-paciente" class="btn btn-primary">Novo paciente</button>
+        </div>
+      </div>
+
+      <section class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>CPF</th>
+              <th>Telefone</th>
+              <th>Convênio</th>
+              <th class="text-right">Ações</th>
+            </tr>
+          </thead>
+          <tbody id="tabela-pacientes">
+            <tr><td colspan="5" class="text-muted">Carregando pacientes...</td></tr>
+          </tbody>
+        </table>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal-overlay" id="modal-paciente">
+    <div class="modal">
+      <header class="modal-header">
+        <h2 class="modal-title" id="modal-paciente-titulo">Novo paciente</h2>
+        <button class="modal-close" data-close>&times;</button>
+      </header>
+      <form id="form-paciente" class="grid-auto">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="nome">Nome completo</label>
+            <input type="text" id="nome" name="nome" required />
+          </div>
+          <div class="form-group">
+            <label for="cpf">CPF</label>
+            <input type="text" id="cpf" name="cpf" required />
+          </div>
+          <div class="form-group">
+            <label for="sexo">Sexo</label>
+            <select id="sexo" name="sexo">
+              <option value="M">Masculino</option>
+              <option value="F">Feminino</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="rg">RG</label>
+            <input type="text" id="rg" name="rg" />
+          </div>
+          <div class="form-group">
+            <label for="orgaoEmissor">Órgão emissor</label>
+            <input type="text" id="orgaoEmissor" name="orgaoEmissor" />
+          </div>
+          <div class="form-group">
+            <label for="dataNascimento">Data de nascimento</label>
+            <input type="date" id="dataNascimento" name="dataNascimento" />
+          </div>
+          <div class="form-group">
+            <label for="telefone">Telefone</label>
+            <input type="text" id="telefone" name="telefone" />
+          </div>
+          <div class="form-group">
+            <label for="celular">Celular</label>
+            <input type="text" id="celular" name="celular" />
+          </div>
+          <div class="form-group">
+            <label for="email">E-mail</label>
+            <input type="email" id="email" name="email" />
+          </div>
+          <div class="form-group">
+            <label for="rua">Rua</label>
+            <input type="text" id="rua" name="rua" />
+          </div>
+          <div class="form-group">
+            <label for="numero">Número</label>
+            <input type="text" id="numero" name="numero" />
+          </div>
+          <div class="form-group">
+            <label for="complemento">Complemento</label>
+            <input type="text" id="complemento" name="complemento" />
+          </div>
+          <div class="form-group">
+            <label for="bairro">Bairro</label>
+            <input type="text" id="bairro" name="bairro" />
+          </div>
+          <div class="form-group">
+            <label for="cidade">Cidade</label>
+            <input type="text" id="cidade" name="cidade" />
+          </div>
+          <div class="form-group">
+            <label for="estado">Estado</label>
+            <input type="text" id="estado" name="estado" />
+          </div>
+          <div class="form-group">
+            <label class="toggle">
+              <input type="checkbox" id="possuiConvenio" name="possuiConvenio" />
+              Possui convênio?
+            </label>
+          </div>
+          <div class="form-group" data-convenio-fields>
+            <label for="convenioId">Convênio</label>
+            <select id="convenioId" name="convenioId" disabled></select>
+          </div>
+          <div class="form-group" data-convenio-fields>
+            <label for="numeroCarteirinha">Número da carteirinha</label>
+            <input type="text" id="numeroCarteirinha" name="numeroCarteirinha" disabled />
+          </div>
+          <div class="form-group" data-convenio-fields>
+            <label for="validadeCarteirinha">Validade da carteirinha</label>
+            <input type="date" id="validadeCarteirinha" name="validadeCarteirinha" disabled />
+          </div>
+        </div>
+        <footer class="modal-footer">
+          <button type="button" class="btn btn-outline" data-close>Cancelar</button>
+          <button type="submit" class="btn btn-primary">Salvar</button>
+        </footer>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modal-confirmacao">
+    <div class="modal">
+      <header class="modal-header">
+        <h2 class="modal-title">Excluir paciente</h2>
+        <button class="modal-close" data-close>&times;</button>
+      </header>
+      <div class="modal-body">
+        <p>Tem certeza de que deseja remover este paciente?</p>
+      </div>
+      <footer class="modal-footer">
+        <button class="btn btn-outline" data-close>Cancelar</button>
+        <button class="btn btn-danger" id="btn-confirmar-exclusao">Excluir</button>
+      </footer>
+    </div>
+  </div>
+
+  <script src="../js/jquery.min.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="js/admin-common.js"></script>
+  <script src="js/pacientes.js"></script>
+</body>
+</html>

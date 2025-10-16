@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Perfis de acesso | Clínica Vida</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div class="admin-layout">
+    <aside class="sidebar">
+      <div class="brand">
+        <img src="../img/logo.svg" alt="Clínica Vida" width="38" />
+        <span>Clínica Vida</span>
+      </div>
+      <nav>
+        <a href="dashboard.html" data-nav>Início</a>
+        <a href="pacientes.html" data-nav>Pacientes</a>
+        <a href="consultas.html" data-nav>Consultas</a>
+        <a href="prontuarios.html" data-nav>Prontuários</a>
+        <a href="funcionarios.html" data-nav>Funcionários</a>
+        <a href="convenios.html" data-nav>Convênios</a>
+        <a href="especialidades.html" data-nav>Especialidades</a>
+        <a href="perfis.html" data-nav>Perfis de Acesso</a>
+      </nav>
+      <button class="btn btn-outline btn-logout">Sair</button>
+    </aside>
+    <main class="admin-main">
+      <header class="admin-header">
+        <div>
+          <div class="breadcrumb">Administrativo &rsaquo; Perfis</div>
+          <h1>Perfis de acesso</h1>
+          <p class="text-muted">Defina permissões detalhadas para cada equipe.</p>
+        </div>
+        <div id="user-badge"></div>
+      </header>
+
+      <div class="flex-end mb-2" data-permission="cadastrarFuncionario">
+        <button id="btn-novo-perfil" class="btn btn-primary">Novo perfil</button>
+      </div>
+
+      <section class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Perfil</th>
+              <th>Funcionários</th>
+              <th>Pacientes</th>
+              <th>Consultas</th>
+              <th>Especialidades</th>
+              <th>Convênios</th>
+              <th>Prontuários</th>
+              <th class="text-right">Ações</th>
+            </tr>
+          </thead>
+          <tbody id="tabela-perfis">
+            <tr><td colspan="8" class="text-muted">Carregando perfis...</td></tr>
+          </tbody>
+        </table>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal-overlay" id="modal-perfil">
+    <div class="modal" style="max-width: 900px;">
+      <header class="modal-header">
+        <h2 class="modal-title" id="modal-perfil-titulo">Novo perfil</h2>
+        <button class="modal-close" data-close>&times;</button>
+      </header>
+      <form id="form-perfil">
+        <div class="modal-body" style="grid-template-columns: 1fr;">
+          <div class="form-group">
+            <label for="nome">Nome do perfil</label>
+            <input type="text" id="nome" name="nome" required />
+          </div>
+          <div class="permission-grid">
+            <div class="permission-card">
+              <h4>Funcionários</h4>
+              <label class="toggle"><input type="checkbox" name="cadastrarFuncionario" /> Cadastrar</label>
+              <label class="toggle"><input type="checkbox" name="lerFuncionario" /> Ler</label>
+              <label class="toggle"><input type="checkbox" name="atualizarFuncionario" /> Atualizar</label>
+              <label class="toggle"><input type="checkbox" name="deletarFuncionario" /> Deletar</label>
+              <label class="toggle"><input type="checkbox" name="listarFuncionario" /> Listar</label>
+            </div>
+            <div class="permission-card">
+              <h4>Pacientes</h4>
+              <label class="toggle"><input type="checkbox" name="cadastrarPaciente" /> Cadastrar</label>
+              <label class="toggle"><input type="checkbox" name="lerPaciente" /> Ler</label>
+              <label class="toggle"><input type="checkbox" name="atualizarPaciente" /> Atualizar</label>
+              <label class="toggle"><input type="checkbox" name="deletarPaciente" /> Deletar</label>
+              <label class="toggle"><input type="checkbox" name="listarPaciente" /> Listar</label>
+            </div>
+            <div class="permission-card">
+              <h4>Consultas</h4>
+              <label class="toggle"><input type="checkbox" name="cadastrarConsulta" /> Cadastrar</label>
+              <label class="toggle"><input type="checkbox" name="lerConsulta" /> Ler</label>
+              <label class="toggle"><input type="checkbox" name="atualizarConsulta" /> Atualizar</label>
+              <label class="toggle"><input type="checkbox" name="deletarConsulta" /> Cancelar</label>
+              <label class="toggle"><input type="checkbox" name="listarConsulta" /> Listar</label>
+            </div>
+            <div class="permission-card">
+              <h4>Especialidades</h4>
+              <label class="toggle"><input type="checkbox" name="cadastrarEspecialidade" /> Cadastrar</label>
+              <label class="toggle"><input type="checkbox" name="lerEspecialidade" /> Ler</label>
+              <label class="toggle"><input type="checkbox" name="atualizarEspecialidade" /> Atualizar</label>
+              <label class="toggle"><input type="checkbox" name="deletarEspecialidade" /> Deletar</label>
+              <label class="toggle"><input type="checkbox" name="listarEspecialidade" /> Listar</label>
+            </div>
+            <div class="permission-card">
+              <h4>Convênios</h4>
+              <label class="toggle"><input type="checkbox" name="cadastrarConvenio" /> Cadastrar</label>
+              <label class="toggle"><input type="checkbox" name="lerConvenio" /> Ler</label>
+              <label class="toggle"><input type="checkbox" name="atualizarConvenio" /> Atualizar</label>
+              <label class="toggle"><input type="checkbox" name="deletarConvenio" /> Deletar</label>
+              <label class="toggle"><input type="checkbox" name="listarConvenio" /> Listar</label>
+            </div>
+            <div class="permission-card">
+              <h4>Prontuários</h4>
+              <label class="toggle"><input type="checkbox" name="cadastrarProntuario" /> Cadastrar</label>
+              <label class="toggle"><input type="checkbox" name="lerProntuario" /> Ler</label>
+              <label class="toggle"><input type="checkbox" name="atualizarProntuario" /> Atualizar</label>
+              <label class="toggle"><input type="checkbox" name="deletarProntuario" /> Deletar</label>
+              <label class="toggle"><input type="checkbox" name="listarProntuario" /> Listar</label>
+            </div>
+          </div>
+        </div>
+        <footer class="modal-footer">
+          <button type="button" class="btn btn-outline" data-close>Cancelar</button>
+          <button type="submit" class="btn btn-primary">Salvar</button>
+        </footer>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modal-confirmacao">
+    <div class="modal">
+      <header class="modal-header">
+        <h2 class="modal-title">Excluir perfil</h2>
+        <button class="modal-close" data-close>&times;</button>
+      </header>
+      <div class="modal-body">
+        <p>Confirmar exclusão deste perfil?</p>
+      </div>
+      <footer class="modal-footer">
+        <button class="btn btn-outline" data-close>Cancelar</button>
+        <button class="btn btn-danger" id="btn-confirmar-exclusao">Excluir</button>
+      </footer>
+    </div>
+  </div>
+
+  <script src="../js/jquery.min.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="js/admin-common.js"></script>
+  <script src="js/perfis.js"></script>
+</body>
+</html>

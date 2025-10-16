@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Especialidades | Clínica Vida</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div class="admin-layout">
+    <aside class="sidebar">
+      <div class="brand">
+        <img src="../img/logo.svg" alt="Clínica Vida" width="38" />
+        <span>Clínica Vida</span>
+      </div>
+      <nav>
+        <a href="dashboard.html" data-nav>Início</a>
+        <a href="pacientes.html" data-nav>Pacientes</a>
+        <a href="consultas.html" data-nav>Consultas</a>
+        <a href="prontuarios.html" data-nav>Prontuários</a>
+        <a href="funcionarios.html" data-nav>Funcionários</a>
+        <a href="convenios.html" data-nav>Convênios</a>
+        <a href="especialidades.html" data-nav>Especialidades</a>
+        <a href="perfis.html" data-nav>Perfis de Acesso</a>
+      </nav>
+      <button class="btn btn-outline btn-logout">Sair</button>
+    </aside>
+    <main class="admin-main">
+      <header class="admin-header">
+        <div>
+          <div class="breadcrumb">Administrativo &rsaquo; Especialidades</div>
+          <h1>Especialidades médicas</h1>
+          <p class="text-muted">Controle as especialidades oferecidas pela clínica.</p>
+        </div>
+        <div id="user-badge"></div>
+      </header>
+
+      <div class="flex-end mb-2" data-permission="cadastrarEspecialidade">
+        <button id="btn-nova-especialidade" class="btn btn-primary">Nova especialidade</button>
+      </div>
+
+      <section class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th class="text-right">Ações</th>
+            </tr>
+          </thead>
+          <tbody id="tabela-especialidades">
+            <tr><td colspan="2" class="text-muted">Carregando especialidades...</td></tr>
+          </tbody>
+        </table>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal-overlay" id="modal-especialidade">
+    <div class="modal">
+      <header class="modal-header">
+        <h2 class="modal-title" id="modal-especialidade-titulo">Nova especialidade</h2>
+        <button class="modal-close" data-close>&times;</button>
+      </header>
+      <form id="form-especialidade">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="nome">Nome da especialidade</label>
+            <input type="text" id="nome" name="nome" required />
+          </div>
+        </div>
+        <footer class="modal-footer">
+          <button type="button" class="btn btn-outline" data-close>Cancelar</button>
+          <button type="submit" class="btn btn-primary">Salvar</button>
+        </footer>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modal-confirmacao">
+    <div class="modal">
+      <header class="modal-header">
+        <h2 class="modal-title">Excluir especialidade</h2>
+        <button class="modal-close" data-close>&times;</button>
+      </header>
+      <div class="modal-body">
+        <p>Deseja remover esta especialidade?</p>
+      </div>
+      <footer class="modal-footer">
+        <button class="btn btn-outline" data-close>Cancelar</button>
+        <button class="btn btn-danger" id="btn-confirmar-exclusao">Excluir</button>
+      </footer>
+    </div>
+  </div>
+
+  <script src="../js/jquery.min.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="js/admin-common.js"></script>
+  <script src="js/especialidades.js"></script>
+</body>
+</html>

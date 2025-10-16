@@ -2,7 +2,7 @@ package br.edu.imepac.comum.services;
 
 import br.edu.imepac.comum.dtos.consulta.ConsultaDto;
 import br.edu.imepac.comum.dtos.consulta.ConsultaRequest;
-import br.edu.imepac.comum.exceptions.ResourceNotFoundException; // Import corrigido
+import br.edu.imepac.comum.exceptions.ResourceNotFoundException;
 import br.edu.imepac.comum.models.Consulta;
 import br.edu.imepac.comum.models.Funcionario;
 import br.edu.imepac.comum.models.Paciente;
@@ -31,15 +31,17 @@ public class ConsultaService {
     @Autowired
     private ModelMapper modelMapper;
 
-    // Método auxiliar para conversão, usado internamente
     private ConsultaDto convertToDto(Consulta consulta) {
         ConsultaDto dto = modelMapper.map(consulta, ConsultaDto.class);
         if (consulta.getPaciente() != null) {
+            dto.setPacienteId(consulta.getPaciente().getId());
             dto.setNomePaciente(consulta.getPaciente().getNome());
         }
         if (consulta.getMedico() != null) {
+            dto.setMedicoId(consulta.getMedico().getId());
             dto.setNomeMedico(consulta.getMedico().getNome());
         }
+        dto.setSintomas(consulta.getSintomas());
         return dto;
     }
 
@@ -96,6 +98,7 @@ public class ConsultaService {
         if (request.getSintomas() != null) {
             consultaExistente.setSintomas(request.getSintomas());
         }
+        consultaExistente.setERetorno(request.isERetorno());
 
         Consulta updatedConsulta = consultaRepository.save(consultaExistente);
         return convertToDto(updatedConsulta);

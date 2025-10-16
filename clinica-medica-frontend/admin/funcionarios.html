@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Funcionários | Clínica Vida</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div class="admin-layout">
+    <aside class="sidebar">
+      <div class="brand">
+        <img src="../img/logo.svg" alt="Clínica Vida" width="38" />
+        <span>Clínica Vida</span>
+      </div>
+      <nav>
+        <a href="dashboard.html" data-nav>Início</a>
+        <a href="pacientes.html" data-nav>Pacientes</a>
+        <a href="consultas.html" data-nav>Consultas</a>
+        <a href="prontuarios.html" data-nav>Prontuários</a>
+        <a href="funcionarios.html" data-nav>Funcionários</a>
+        <a href="convenios.html" data-nav>Convênios</a>
+        <a href="especialidades.html" data-nav>Especialidades</a>
+        <a href="perfis.html" data-nav>Perfis de Acesso</a>
+      </nav>
+      <button class="btn btn-outline btn-logout">Sair</button>
+    </aside>
+    <main class="admin-main">
+      <header class="admin-header">
+        <div>
+          <div class="breadcrumb">Administrativo &rsaquo; Funcionários</div>
+          <h1>Equipe da clínica</h1>
+          <p class="text-muted">Gerencie usuários e permissões de acesso.</p>
+        </div>
+        <div id="user-badge"></div>
+      </header>
+
+      <div class="flex-end mb-2" data-permission="cadastrarFuncionario">
+        <button id="btn-novo-funcionario" class="btn btn-primary">Novo funcionário</button>
+      </div>
+
+      <section class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Usuário</th>
+              <th>E-mail</th>
+              <th>Tipo</th>
+              <th>Perfil</th>
+              <th class="text-right">Ações</th>
+            </tr>
+          </thead>
+          <tbody id="tabela-funcionarios">
+            <tr><td colspan="6" class="text-muted">Carregando funcionários...</td></tr>
+          </tbody>
+        </table>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal-overlay" id="modal-funcionario">
+    <div class="modal">
+      <header class="modal-header">
+        <h2 class="modal-title" id="modal-funcionario-titulo">Novo funcionário</h2>
+        <button class="modal-close" data-close>&times;</button>
+      </header>
+      <form id="form-funcionario">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="nome">Nome completo</label>
+            <input type="text" id="nome" name="nome" required />
+          </div>
+          <div class="form-group">
+            <label for="cpf">CPF</label>
+            <input type="text" id="cpf" name="cpf" required />
+          </div>
+          <div class="form-group">
+            <label for="email">E-mail</label>
+            <input type="email" id="email" name="email" required />
+          </div>
+          <div class="form-group">
+            <label for="usuario">Usuário</label>
+            <input type="text" id="usuario" name="usuario" required />
+          </div>
+          <div class="form-group">
+            <label for="senha">Senha</label>
+            <input type="password" id="senha" name="senha" required />
+          </div>
+          <div class="form-group">
+            <label for="sexo">Sexo</label>
+            <select id="sexo" name="sexo">
+              <option value="M">Masculino</option>
+              <option value="F">Feminino</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="dataNascimento">Data de nascimento</label>
+            <input type="date" id="dataNascimento" name="dataNascimento" />
+          </div>
+          <div class="form-group">
+            <label for="rua">Rua</label>
+            <input type="text" id="rua" name="rua" />
+          </div>
+          <div class="form-group">
+            <label for="numero">Número</label>
+            <input type="text" id="numero" name="numero" />
+          </div>
+          <div class="form-group">
+            <label for="complemento">Complemento</label>
+            <input type="text" id="complemento" name="complemento" />
+          </div>
+          <div class="form-group">
+            <label for="bairro">Bairro</label>
+            <input type="text" id="bairro" name="bairro" />
+          </div>
+          <div class="form-group">
+            <label for="cidade">Cidade</label>
+            <input type="text" id="cidade" name="cidade" />
+          </div>
+          <div class="form-group">
+            <label for="estado">Estado</label>
+            <input type="text" id="estado" name="estado" />
+          </div>
+          <div class="form-group">
+            <label for="tipoFuncionario">Tipo de funcionário</label>
+            <select id="tipoFuncionario" name="tipoFuncionario">
+              <option value="ATENDENTE">Atendente</option>
+              <option value="MEDICO">Médico</option>
+              <option value="OUTROS">Outros</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="perfilId">Perfil de acesso</label>
+            <select id="perfilId" name="perfilId" required></select>
+          </div>
+        </div>
+        <footer class="modal-footer">
+          <button type="button" class="btn btn-outline" data-close>Cancelar</button>
+          <button type="submit" class="btn btn-primary">Salvar</button>
+        </footer>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modal-confirmacao">
+    <div class="modal">
+      <header class="modal-header">
+        <h2 class="modal-title">Excluir funcionário</h2>
+        <button class="modal-close" data-close>&times;</button>
+      </header>
+      <div class="modal-body">
+        <p>Deseja realmente excluir este funcionário?</p>
+      </div>
+      <footer class="modal-footer">
+        <button class="btn btn-outline" data-close>Cancelar</button>
+        <button class="btn btn-danger" id="btn-confirmar-exclusao">Excluir</button>
+      </footer>
+    </div>
+  </div>
+
+  <script src="../js/jquery.min.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="js/admin-common.js"></script>
+  <script src="js/funcionarios.js"></script>
+</body>
+</html>
