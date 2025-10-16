@@ -16,7 +16,12 @@ public class ConfigModelMapper {
         ModelMapper modelMapper = new ModelMapper();
         modelMapper.getConfiguration().setSkipNullEnabled(true);
 
-        modelMapper.typeMap(Paciente.class, PacienteDto.class).setPostConverter(context -> {
+        modelMapper.typeMap(Paciente.class, PacienteDto.class)
+                .addMappings(mapper -> {
+                    mapper.skip(PacienteDto::setConvenioId);
+                    mapper.skip(PacienteDto::setNomeConvenio);
+                })
+                .setPostConverter(context -> {
             Paciente source = context.getSource();
             PacienteDto destination = context.getDestination();
             if (source.getConvenio() != null) {
@@ -29,7 +34,12 @@ public class ConfigModelMapper {
             return destination;
         });
 
-        modelMapper.typeMap(Funcionario.class, FuncionarioDto.class).setPostConverter(context -> {
+        modelMapper.typeMap(Funcionario.class, FuncionarioDto.class)
+                .addMappings(mapper -> {
+                    mapper.skip(FuncionarioDto::setPerfilId);
+                    mapper.skip(FuncionarioDto::setPerfilNome);
+                })
+                .setPostConverter(context -> {
             Funcionario source = context.getSource();
             FuncionarioDto destination = context.getDestination();
             if (source.getPerfil() != null) {
