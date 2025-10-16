@@ -11,20 +11,20 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FuncionarioDto {
-    private Integer id;
+    private Long id;
     private String usuario;
     private String nome;
-    private Integer idade;
     private char sexo;
     private String cpf;
+    private String email;
+    private LocalDate dataNascimento;
     private String rua;
     private String numero;
     private String complemento;
     private String bairro;
     private String cidade;
     private String estado;
-    private String contato;
-    private String email;
-    private LocalDate dataNascimento;
     private EnumTipoFuncionario tipoFuncionario;
+    private Long perfilId;
+    private String perfilNome;
 }

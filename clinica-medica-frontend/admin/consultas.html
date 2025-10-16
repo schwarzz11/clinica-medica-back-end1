@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Consultas | Clínica Vida</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div class="admin-layout">
+    <aside class="sidebar">
+      <div class="brand">
+        <img src="../img/logo.svg" alt="Clínica Vida" width="38" />
+        <span>Clínica Vida</span>
+      </div>
+      <nav>
+        <a href="dashboard.html" data-nav>Início</a>
+        <a href="pacientes.html" data-nav>Pacientes</a>
+        <a href="consultas.html" data-nav>Consultas</a>
+        <a href="prontuarios.html" data-nav>Prontuários</a>
+        <a href="funcionarios.html" data-nav>Funcionários</a>
+        <a href="convenios.html" data-nav>Convênios</a>
+        <a href="especialidades.html" data-nav>Especialidades</a>
+        <a href="perfis.html" data-nav>Perfis de Acesso</a>
+      </nav>
+      <button class="btn btn-outline btn-logout">Sair</button>
+    </aside>
+    <main class="admin-main">
+      <header class="admin-header">
+        <div>
+          <div class="breadcrumb">Agendamento &rsaquo; Consultas</div>
+          <h1>Consultas</h1>
+          <p class="text-muted">Gerencie agendamentos e acompanhe status.</p>
+        </div>
+        <div id="user-badge"></div>
+      </header>
+
+      <div class="flex-end mb-2" data-permission="cadastrarConsulta">
+        <button id="btn-nova-consulta" class="btn btn-primary">Nova consulta</button>
+      </div>
+
+      <section class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>Paciente</th>
+              <th>Médico</th>
+              <th>Tipo</th>
+              <th>Status</th>
+              <th>Sintomas</th>
+              <th class="text-right">Ações</th>
+            </tr>
+          </thead>
+          <tbody id="tabela-consultas">
+            <tr><td colspan="7" class="text-muted">Carregando consultas...</td></tr>
+          </tbody>
+        </table>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal-overlay" id="modal-consulta">
+    <div class="modal">
+      <header class="modal-header">
+        <h2 class="modal-title" id="modal-consulta-titulo">Nova consulta</h2>
+        <button class="modal-close" data-close>&times;</button>
+      </header>
+      <form id="form-consulta">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="pacienteId">Paciente</label>
+            <select id="pacienteId" name="pacienteId" required></select>
+          </div>
+          <div class="form-group">
+            <label for="medicoId">Médico</label>
+            <select id="medicoId" name="medicoId" required></select>
+          </div>
+          <div class="form-group">
+            <label for="dataHorario">Data e hora</label>
+            <input type="datetime-local" id="dataHorario" name="dataHorario" required />
+          </div>
+          <div class="form-group" style="grid-column: span 2;">
+            <label for="sintomas">Sintomas relatados</label>
+            <textarea id="sintomas" name="sintomas" rows="3"></textarea>
+          </div>
+          <div class="form-group">
+            <label class="toggle">
+              <input type="checkbox" id="eRetorno" name="eRetorno" /> Consulta de retorno
+            </label>
+          </div>
+        </div>
+        <footer class="modal-footer">
+          <button type="button" class="btn btn-outline" data-close>Cancelar</button>
+          <button type="submit" class="btn btn-primary">Salvar</button>
+        </footer>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modal-cancelar">
+    <div class="modal">
+      <header class="modal-header">
+        <h2 class="modal-title">Cancelar consulta</h2>
+        <button class="modal-close" data-close>&times;</button>
+      </header>
+      <div class="modal-body">
+        <p>Confirmar cancelamento desta consulta?</p>
+      </div>
+      <footer class="modal-footer">
+        <button class="btn btn-outline" data-close>Manter</button>
+        <button class="btn btn-danger" id="btn-confirmar-cancelamento">Cancelar consulta</button>
+      </footer>
+    </div>
+  </div>
+
+  <script src="../js/jquery.min.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="js/admin-common.js"></script>
+  <script src="js/consultas.js"></script>
+</body>
+</html>

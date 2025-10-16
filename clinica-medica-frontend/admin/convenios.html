@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Convênios | Clínica Vida</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div class="admin-layout">
+    <aside class="sidebar">
+      <div class="brand">
+        <img src="../img/logo.svg" alt="Clínica Vida" width="38" />
+        <span>Clínica Vida</span>
+      </div>
+      <nav>
+        <a href="dashboard.html" data-nav>Início</a>
+        <a href="pacientes.html" data-nav>Pacientes</a>
+        <a href="consultas.html" data-nav>Consultas</a>
+        <a href="prontuarios.html" data-nav>Prontuários</a>
+        <a href="funcionarios.html" data-nav>Funcionários</a>
+        <a href="convenios.html" data-nav>Convênios</a>
+        <a href="especialidades.html" data-nav>Especialidades</a>
+        <a href="perfis.html" data-nav>Perfis de Acesso</a>
+      </nav>
+      <button class="btn btn-outline btn-logout">Sair</button>
+    </aside>
+    <main class="admin-main">
+      <header class="admin-header">
+        <div>
+          <div class="breadcrumb">Administrativo &rsaquo; Convênios</div>
+          <h1>Convênios</h1>
+          <p class="text-muted">Gerencie as parcerias de saúde aceitas pela clínica.</p>
+        </div>
+        <div id="user-badge"></div>
+      </header>
+
+      <div class="flex-end mb-2" data-permission="cadastrarConvenio">
+        <button id="btn-novo-convenio" class="btn btn-primary">Novo convênio</button>
+      </div>
+
+      <section class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Empresa</th>
+              <th>CNPJ</th>
+              <th>Contato</th>
+              <th>Telefone</th>
+              <th class="text-right">Ações</th>
+            </tr>
+          </thead>
+          <tbody id="tabela-convenios">
+            <tr><td colspan="5" class="text-muted">Carregando convênios...</td></tr>
+          </tbody>
+        </table>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal-overlay" id="modal-convenio">
+    <div class="modal">
+      <header class="modal-header">
+        <h2 class="modal-title" id="modal-convenio-titulo">Novo convênio</h2>
+        <button class="modal-close" data-close>&times;</button>
+      </header>
+      <form id="form-convenio">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="nomeEmpresa">Nome da empresa</label>
+            <input type="text" id="nomeEmpresa" name="nomeEmpresa" required />
+          </div>
+          <div class="form-group">
+            <label for="cnpj">CNPJ</label>
+            <input type="text" id="cnpj" name="cnpj" required />
+          </div>
+          <div class="form-group">
+            <label for="nomeContato">Nome do contato</label>
+            <input type="text" id="nomeContato" name="nomeContato" />
+          </div>
+          <div class="form-group">
+            <label for="telefone">Telefone</label>
+            <input type="text" id="telefone" name="telefone" />
+          </div>
+        </div>
+        <footer class="modal-footer">
+          <button type="button" class="btn btn-outline" data-close>Cancelar</button>
+          <button type="submit" class="btn btn-primary">Salvar</button>
+        </footer>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modal-confirmacao">
+    <div class="modal">
+      <header class="modal-header">
+        <h2 class="modal-title">Excluir convênio</h2>
+        <button class="modal-close" data-close>&times;</button>
+      </header>
+      <div class="modal-body">
+        <p>Deseja realmente excluir este convênio?</p>
+      </div>
+      <footer class="modal-footer">
+        <button class="btn btn-outline" data-close>Cancelar</button>
+        <button class="btn btn-danger" id="btn-confirmar-exclusao">Excluir</button>
+      </footer>
+    </div>
+  </div>
+
+  <script src="../js/jquery.min.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="js/admin-common.js"></script>
+  <script src="js/convenios.js"></script>
+</body>
+</html>
